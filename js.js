@@ -24,7 +24,7 @@ $(document).ready(function() {
                     "</div>" +
                     "</div>";
 
-                var HTML_Li_SelectMenu = "<li><div class='col-md-4 nameCity'><span>%nameCity%</span></div></li>";
+                var HTML_Li_SelectMenu = "<div class='col-md-4 nameCity'><span>%nameCity%</span></div>";
 
                 /*
                 "<li>" +
@@ -35,21 +35,22 @@ $(document).ready(function() {
 
 
 /******************** append select menu in document ************************/
-$("body:last").append(HTMLContainerSelectMenu);
+$("body:last").append(HTML_Container_SelectMenu);//add container
 
+var arr = [];
                 for (var key in cityList.city) {
 
-                    var formatted = HTMLTagSelectMenu.replace("%nameCity%"+key, cityList.city[key]);
-console.log(formatted);
 
+                    var formatted =  HTML_Li_SelectMenu.replace("%nameCity%", cityList.city[key]);
 
-
-                    $("#cityList:last").append(formatted);
+                    arr.push(formatted);
 
                 }
 
+var li = "<li>"+arr[0]+arr[1]+arr[2]+"</li><li>"+arr[3]+arr[4]+arr[5]+"</li><li>"+arr[6]+arr[7]+arr[8]+"</li>";
 
-
+                $("#cityList").append(li);
+/************** end *************/
 
 
 
