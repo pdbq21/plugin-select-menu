@@ -31,29 +31,36 @@ $(document).ready(function () {
              */
 
 
-
-
-
             this.click(function (event) {
 
-               if ($("div").is("#selectMenu")){
-                   $("#selectMenu").remove();
-                   return;
-               }
-                //$( this ).parents("#selectMenu").remove();
+                function UpOrDown(elem) {
+                    var documentViewTop = $(window).scrollTop(),
+                        elementTop = $(elem).offset().top,
 
+                        gratifyElementHeight = elementTop - 200; //- $("#selectMenu").css(height);
+                    return ( gratifyElementHeight > documentViewTop);
+                }
+
+
+                if ($("div").is("#selectMenu")) {
+                    $("#selectMenu").remove();
+                    return;
+                }
+                //$( this ).parents("#selectMenu").remove();
+                if (UpOrDown(this)) {
+
+                    $(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
+
+                } else {
+                    $(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
+                }
 
                 /******************** append select menu in document ************************/
-                $(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
 
                 var arr = [];
                 for (var key in cityList.city) {
-
-
                     var formatted = HTML_Li_SelectMenu.replace("%nameCity%", cityList.city[key]);
-
                     arr.push(formatted);
-
                 }
 
                 var li = "<li>" + arr[0] + arr[1] + arr[2] + "</li><li>" + arr[3] + arr[4] + arr[5] + "</li>" +
@@ -66,39 +73,34 @@ $(document).ready(function () {
                 var inputValue = [];
                 $("span").click(function () {
 
+                    /************** check availability class 'active' ***********/
+                    if ($(this).parents(".nameCity").attr('class') === "col-md-4 nameCity active") {
+                        $(this).parents(".nameCity").removeClass("active");
 
-/************** check availability class 'active' ***********/
-if ($( this ).parents(".nameCity").attr('class') ===  "col-md-4 nameCity active" ) {
-    $( this ).parents(".nameCity").removeClass("active");
+                        for (var i = inputValue.length - 1; i >= 0; i--) {
+                            if (inputValue[i] === $(this).text()) {
+                                //delete inputValue[i];
+                                inputValue.splice(i, 1);
 
-
-    for (var i = inputValue.length-1; i >= 0; i--) {
-        if (inputValue[i] === $(this).text()) {
-            //delete inputValue[i];
-            inputValue.splice(i, 1);
-
-            break;
-        }
-    }
-}
-else{
-    $( this ).parents(".nameCity").addClass( "active" );
-    var temp = $(this).text();
-    inputValue.push(temp);
-}
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        $(this).parents(".nameCity").addClass("active");
+                        var temp = $(this).text();
+                        inputValue.push(temp);
+                    }
 
                     $("input").val(inputValue);
 
-
                 });
-
 
                 /****** end ****/
 
 
                 $("button").click(function () {
-
-                    $( this ).parents("#selectMenu").remove();
+                    $(this).parents("#selectMenu").remove();
                 });
 
 
