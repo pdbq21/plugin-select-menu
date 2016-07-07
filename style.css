@@ -6,5 +6,42 @@ body{
     margin-bottom: 1em;
 }
 .row .col-md-12 input{
-    width: auto;
+    width: 100%;
 }
+#selectMenu{
+    height: 200px;
+    width: 400px;
+    border: 1px solid red;
+    position: absolute;
+}
+#selectMenu ul{
+    padding-left: 0px;
+}
+
+#selectMenu ul li{
+
+    list-style: none;
+
+}
+
+#selectMenu ul li div{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+}
+#selectMenu ul li div span {
+
+    cursor: pointer;
+}
+#selectMenu button{
+    width: 100%;
+}
+
+
+
+.active{
+background-color: #3c763d;
+color: white;
+}
+/*background: url("https://s-passets-cache-ak0.pinimg.com/webapp/style/sprites/webapp-common-above_the_fold-1x-47e45684.png") -328px -218px no-repeat;*/
