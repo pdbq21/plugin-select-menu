@@ -1,0 +1,10 @@
+body{
+
+}
+
+.container .row:first-child{
+    margin-bottom: 1em;
+}
+.row .col-md-12 input{
+    width: auto;
+}
