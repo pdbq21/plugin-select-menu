@@ -9,19 +9,19 @@ $(document).ready(function () {
 
 //Object tags name
             var cityList = {
-                city: ["New York", "Orlando", "Las Vegas", "Los Angeles", "New Orleans", "Denver", "Anchorage",
-                    "Honolulu", "San Antonio"]
+                city: [" New York", " Orlando", " Las Vegas", " Los Angeles", " New Orleans", " Denver", " Anchorage",
+                    " Honolulu", " San Antonio"]
             };
 
 //template a select menu in HTML
             var HTML_Container_SelectMenu = "<div class='container' id='selectMenu'>" +
                 "<div class='row'>" +
                 "<ul class='list-group' id='cityList'></ul>" +
-                "<div class='col-md-12'><button type='submit' class='btn btn-default'>Done</button></div>" +
+                "<div class='col-md-12 col-sm-12 col-xs-12'><button type='submit' class='btn btn-default'>Done</button></div>" +
                 "</div>" +
                 "</div>";
 
-            var HTML_Li_SelectMenu = "<div class='col-md-4 nameCity'><span>%nameCity%</span></div>";
+            var HTML_Li_SelectMenu = "<div class='col-md-4 col-sm-4 col-xs-4 nameCity'><span>%nameCity%</span></div>";
 
             /*
              "<li>" +
@@ -33,27 +33,54 @@ $(document).ready(function () {
 
             this.click(function (event) {
 
+
+
                 function UpOrDown(elem) {
                     var documentViewTop = $(window).scrollTop(),
                         elementTop = $(elem).offset().top,
 
                         gratifyElementHeight = elementTop - 200; //- $("#selectMenu").css(height);
-                    return ( gratifyElementHeight > documentViewTop);
+                    //return ( gratifyElementHeight > documentViewTop);
+                    /** Test **/
+                    if ( gratifyElementHeight > documentViewTop){
+                        return $("#selectMenu").addClass("up");
+                    } else {
+return       $("#selectMenu").addClass("down");
+                    }
+
+
                 }
+
 
 
                 if ($("div").is("#selectMenu")) {
-                    $("#selectMenu").remove();
+                    if ($("#selectMenu").attr('style') === "display: none;"){
+                        $("#selectMenu").show();
+                        UpOrDown(this);
+                    }
+                    else{
+                        $("#selectMenu").hide();
+                        $("#selectMenu").removeClass("up down");
+                    }
+
+
                     return;
                 }
                 //$( this ).parents("#selectMenu").remove();
+
+                $(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
+
+                UpOrDown(this);
+                /*
                 if (UpOrDown(this)) {
 
-                    $(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
+                    //$(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
 
+                    $("#selectMenu").addClass("up");
                 } else {
-                    $(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
-                }
+                    //$(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
+                    $("#selectMenu").addClass("down");
+                }*/
 
                 /******************** append select menu in document ************************/
 
@@ -74,7 +101,7 @@ $(document).ready(function () {
                 $("span").click(function () {
 
                     /************** check availability class 'active' ***********/
-                    if ($(this).parents(".nameCity").attr('class') === "col-md-4 nameCity active") {
+                    if ($(this).parents(".nameCity").attr('class') === "col-md-4 col-sm-4 col-xs-4 nameCity active") {
                         $(this).parents(".nameCity").removeClass("active");
 
                         for (var i = inputValue.length - 1; i >= 0; i--) {
@@ -101,6 +128,7 @@ $(document).ready(function () {
 
                 $("button").click(function () {
                     $(this).parents("#selectMenu").remove();
+                    $("input").focus();
                 });
 
 
