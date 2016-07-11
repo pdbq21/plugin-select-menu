@@ -1,16 +1,25 @@
-@media (max-width: 350px) {
+@media (max-width: 480px) {
+    #forPhone{
 
-#selectMenu{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    form{
+        width: 100% !important;
+    }
+    #selectMenu {
 
-    margin-left: -2.3em;
-}
-    .up{
-        top: -620%;
+        width: 100% !important;
+        margin-left: 0em !important;
+        overflow-y: auto;
+
     }
-    .down{
-        margin-top: 1em;
+    input{
+        width: 100% !important;
+        margin-left: auto !important;
     }
 }
+
 
 
 
@@ -72,7 +81,6 @@
 .active{
 
 
-background-color: rgb(25, 173, 27);;
-color: white;
+    background-color: rgb(25, 173, 27);;
+    color: white;
 }
-/*background: url("https://s-passets-cache-ak0.pinimg.com/webapp/style/sprites/webapp-common-above_the_fold-1x-47e45684.png") -328px -218px no-repeat;*/

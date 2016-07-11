@@ -23,6 +23,8 @@ $(document).ready(function () {
 
             var HTML_Li_SelectMenu = "<div class='col-md-4 col-sm-4 col-xs-4 nameCity'><span>%nameCity%</span></div>";
 
+            //var HTML_LI_SelectMenu_phone = "<div class='col-md-12 col-sm-12 col-xs-12 nameCity'><span>%nameCity%</span></div>";
+
             /*
              "<li>" +
              "<div class='col-md-4 nameCity'><span>%nameCity%</span></div>" +
@@ -34,7 +36,6 @@ $(document).ready(function () {
             this.click(function (event) {
 
 
-
                 function UpOrDown(elem) {
                     var documentViewTop = $(window).scrollTop(),
                         elementTop = $(elem).offset().top,
@@ -42,23 +43,22 @@ $(document).ready(function () {
                         gratifyElementHeight = elementTop - 200; //- $("#selectMenu").css(height);
                     //return ( gratifyElementHeight > documentViewTop);
                     /** Test **/
-                    if ( gratifyElementHeight > documentViewTop){
+                    if (gratifyElementHeight > documentViewTop) {
                         return $("#selectMenu").addClass("up");
                     } else {
-return       $("#selectMenu").addClass("down");
+                        return $("#selectMenu").addClass("down");
                     }
 
 
                 }
 
 
-
                 if ($("div").is("#selectMenu")) {
-                    if ($("#selectMenu").attr('style') === "display: none;"){
+                    if ($("#selectMenu").attr('style') === "display: none;") {
                         $("#selectMenu").show();
                         UpOrDown(this);
                     }
-                    else{
+                    else {
                         $("#selectMenu").hide();
                         $("#selectMenu").removeClass("up down");
                     }
@@ -72,15 +72,15 @@ return       $("#selectMenu").addClass("down");
 
                 UpOrDown(this);
                 /*
-                if (UpOrDown(this)) {
+                 if (UpOrDown(this)) {
 
-                    //$(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
+                 //$(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
 
-                    $("#selectMenu").addClass("up");
-                } else {
-                    //$(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
-                    $("#selectMenu").addClass("down");
-                }*/
+                 $("#selectMenu").addClass("up");
+                 } else {
+                 //$(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
+                 $("#selectMenu").addClass("down");
+                 }*/
 
                 /******************** append select menu in document ************************/
 
@@ -93,7 +93,22 @@ return       $("#selectMenu").addClass("down");
                 var li = "<li>" + arr[0] + arr[1] + arr[2] + "</li><li>" + arr[3] + arr[4] + arr[5] + "</li>" +
                     "<li >" + arr[6] + arr[7] + arr[8] + "</li>";
                 /*<span class="badge">12</span>*/
-                $("#cityList").append(li);
+
+                var li_phone = "<li>" + arr[0] + "</li><li>" + arr[1] + "</li><li>" + arr[2] + "</li><li>" + arr[3] + "</li><li>" + arr[4] + "</li><li>" + arr[5] + "</li>" +
+                    "<li >" + arr[6] + "</li><li>" + arr[7] + "</li><li>" + arr[8] + "</li>";
+
+
+                if ($(window).width() < 480) {
+
+                    $("#cityList").append(li_phone);
+                    $(".nameCity").removeClass("col-md-4 col-sm-4 col-xs-4");
+
+                    $(".nameCity").addClass("col-md-12 col-sm-12 col-xs-12");
+
+                } else {
+                    $("#cityList").append(li);
+                }
+                //$("#cityList").append(li);
                 /************** end *************/
 
                 /**************** add input ********************/
@@ -101,7 +116,11 @@ return       $("#selectMenu").addClass("down");
                 $("span").click(function () {
 
                     /************** check availability class 'active' ***********/
-                    if ($(this).parents(".nameCity").attr('class') === "col-md-4 col-sm-4 col-xs-4 nameCity active") {
+                    //console.log($(this).parents(".nameCity").attr('class'));
+
+
+                    if ($(this).parents(".nameCity").attr('class') === "col-md-4 col-sm-4 col-xs-4 nameCity active" ||
+                        $(this).parents(".nameCity").attr('class') === "nameCity col-md-12 col-sm-12 col-xs-12 active") {
                         $(this).parents(".nameCity").removeClass("active");
 
                         for (var i = inputValue.length - 1; i >= 0; i--) {
