@@ -11,7 +11,7 @@
 
         width: 100% !important;
         margin-left: 0em !important;
-        overflow-y: auto;
+
 
     }
     input{
@@ -75,7 +75,10 @@
 #selectMenu button{
     width: 100%;
 }
-
+#divUl{
+    overflow-y: auto;
+    height: 11em;
+}
 
 
 .active{

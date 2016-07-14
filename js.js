@@ -7,117 +7,118 @@ $(document).ready(function () {
         $.fn.myPlugin = function () {
 
 
-//Object tags name
             var cityList = {
-                city: [" New York", " Orlando", " Las Vegas", " Los Angeles", " New Orleans", " Denver", " Anchorage",
-                    " Honolulu", " San Antonio"]
+                city: [],
+                ajax: function () {
+                    $.ajax({
+                        url: "http://localhost:8000/json-router/cities/",
+                        type: 'GET',
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0, dataLength = data.length; i < dataLength; i++) {
+                                cityList.city.push(" " + data[i].name);
+                            }
+                        }
+                    });
+                }
             };
 
-//template a select menu in HTML
             var HTML_Container_SelectMenu = "<div class='container' id='selectMenu'>" +
                 "<div class='row'>" +
-                "<ul class='list-group' id='cityList'></ul>" +
+                "<div class='col-md-12 col-sm-12 col-xs-12' id='divUl'><ul class='list-group' id='cityList'></ul></div>" +
                 "<div class='col-md-12 col-sm-12 col-xs-12'><button type='submit' class='btn btn-default'>Done</button></div>" +
                 "</div>" +
                 "</div>";
 
             var HTML_Li_SelectMenu = "<div class='col-md-4 col-sm-4 col-xs-4 nameCity'><span>%nameCity%</span></div>";
 
-            //var HTML_LI_SelectMenu_phone = "<div class='col-md-12 col-sm-12 col-xs-12 nameCity'><span>%nameCity%</span></div>";
+            function list(arr) {
+                var listLi = "";
+                for (var i = 0, lengthArr = arr.length; i < lengthArr; i += 3) {
 
-            /*
-             "<li>" +
-             "<div class='col-md-4 nameCity'><span>%nameCity%</span></div>" +
-             "<div class='col-md-4 nameCity'><span>%nameCity%</span></div>" +
-             "<div class='col-md-4 nameCity'><span>%nameCity%</span></div></li>";
-             */
+                    if (arr[i+1] === undefined){
+                        listLi += "<li>" + arr[i + 0] + "" + "" + "</li>";
+                    }else if(arr[i+2] === undefined){
+                        listLi += "<li>" + arr[i + 0] + arr[i + 1] + "" + "</li>";
+                    }else
 
+                        listLi += "<li>" + arr[i + 0] + arr[i + 1] + arr[i + 2] + "</li>";
+                }
+                return listLi;
+            }
 
-            this.click(function (event) {
-
-
-                function UpOrDown(elem) {
-                    var documentViewTop = $(window).scrollTop(),
-                        elementTop = $(elem).offset().top,
-
-                        gratifyElementHeight = elementTop - 200; //- $("#selectMenu").css(height);
-                    //return ( gratifyElementHeight > documentViewTop);
-                    /** Test **/
-                    if (gratifyElementHeight > documentViewTop) {
-                        return $("#selectMenu").addClass("up");
-                    } else {
-                        return $("#selectMenu").addClass("down");
-                    }
-
+            function listPhone(arr) {
+                var listLi = '';
+                for (var i = 0, lengthArr = arr.length; i < lengthArr; i++) {
+                    listLi += "<li>" + arr[i] + "</li>";
 
                 }
+                return listLi;
+            }
 
+            function UpOrDown(elem) {
+
+                var documentViewTop = $(window).scrollTop(),
+                    elementTop = $(elem).offset().top,
+                    gratifyElementHeight = elementTop - 200;
+
+
+                if (gratifyElementHeight > documentViewTop) {
+                    return $("#selectMenu").addClass("up");
+                } else {
+                    return $("#selectMenu").addClass("down");
+                }
+
+            }
+
+            function updateDiv() {
 
                 if ($("div").is("#selectMenu")) {
                     if ($("#selectMenu").attr('style') === "display: none;") {
                         $("#selectMenu").show();
-                        UpOrDown(this);
+                        UpOrDown($("input"));
                     }
                     else {
                         $("#selectMenu").hide();
                         $("#selectMenu").removeClass("up down");
                     }
 
-
                     return;
                 }
-                //$( this ).parents("#selectMenu").remove();
+
 
                 $(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
 
-                UpOrDown(this);
-                /*
-                 if (UpOrDown(this)) {
-
-                 //$(".container-fluid .div .col-md-12 form input").before(HTML_Container_SelectMenu);//add container
-
-                 $("#selectMenu").addClass("up");
-                 } else {
-                 //$(".container-fluid .div .col-md-12 form").append(HTML_Container_SelectMenu);//add container
-                 $("#selectMenu").addClass("down");
-                 }*/
+                UpOrDown($("input"));
 
                 /******************** append select menu in document ************************/
 
                 var arr = [];
+
                 for (var key in cityList.city) {
+
                     var formatted = HTML_Li_SelectMenu.replace("%nameCity%", cityList.city[key]);
                     arr.push(formatted);
                 }
 
-                var li = "<li>" + arr[0] + arr[1] + arr[2] + "</li><li>" + arr[3] + arr[4] + arr[5] + "</li>" +
-                    "<li >" + arr[6] + arr[7] + arr[8] + "</li>";
-                /*<span class="badge">12</span>*/
-
-                var li_phone = "<li>" + arr[0] + "</li><li>" + arr[1] + "</li><li>" + arr[2] + "</li><li>" + arr[3] + "</li><li>" + arr[4] + "</li><li>" + arr[5] + "</li>" +
-                    "<li >" + arr[6] + "</li><li>" + arr[7] + "</li><li>" + arr[8] + "</li>";
-
-
                 if ($(window).width() < 480) {
 
-                    $("#cityList").append(li_phone);
+                    $("#cityList").append(listPhone(arr));
                     $(".nameCity").removeClass("col-md-4 col-sm-4 col-xs-4");
 
                     $(".nameCity").addClass("col-md-12 col-sm-12 col-xs-12");
 
                 } else {
-                    $("#cityList").append(li);
+                    $("#cityList").append(list(arr));
                 }
-                //$("#cityList").append(li);
-                /************** end *************/
 
-                /**************** add input ********************/
+
+                /************** end *************/
                 var inputValue = [];
+
                 $("span").click(function () {
 
                     /************** check availability class 'active' ***********/
-                    //console.log($(this).parents(".nameCity").attr('class'));
-
 
                     if ($(this).parents(".nameCity").attr('class') === "col-md-4 col-sm-4 col-xs-4 nameCity active" ||
                         $(this).parents(".nameCity").attr('class') === "nameCity col-md-12 col-sm-12 col-xs-12 active") {
@@ -125,7 +126,7 @@ $(document).ready(function () {
 
                         for (var i = inputValue.length - 1; i >= 0; i--) {
                             if (inputValue[i] === $(this).text()) {
-                                //delete inputValue[i];
+
                                 inputValue.splice(i, 1);
 
                                 break;
@@ -143,17 +144,25 @@ $(document).ready(function () {
                 });
 
                 /****** end ****/
-
+                /**************** add input ********************/
 
                 $("button").click(function () {
                     $(this).parents("#selectMenu").remove();
                     $("input").focus();
                 });
+                /****** end ****/
 
 
-                return event.preventDefault();//re-play block
+            }
 
-            });//end this.submit(function (event)
+
+            this.click(function (event) {
+
+                if (cityList.city[0] === undefined) cityList.ajax();
+
+                setTimeout(updateDiv, 250);
+
+            });//end this.click(function (event)
 
 
         };// end $.fn.myPlugin
@@ -164,3 +173,14 @@ $(document).ready(function () {
 
 
 });// end.
+
+
+
+
+
+
+
+
+
+
+
