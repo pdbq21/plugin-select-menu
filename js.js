@@ -11,7 +11,8 @@ $(document).ready(function () {
                 city: [],
                 ajax: function () {
                     $.ajax({
-                        url: "http://localhost:8000/json-router/cities/",
+                        //url: "http://localhost:8000/json-router/cities/",
+                        url: 'https://pdbq21.github.io/plugin-select-menu/cities.json',
                         type: 'GET',
                         dataType: "json",
                         success: function (data) {
@@ -173,14 +174,3 @@ $(document).ready(function () {
 
 
 });// end.
-
-
-
-
-
-
-
-
-
-
-
